@@ -67,8 +67,10 @@ public class ClientUtil {
      */
     @SneakyThrows
     public static void writeToSocket(String message, Socket socket) {
-        String readMessage = readMessage(openConsoleReader());
-        socket.getOutputStream().write(readMessage.getBytes());
+        OutputStream outputStream = socket.getOutputStream();
+        Writer writer = new OutputStreamWriter(outputStream);
+        writer.write(message);
+        writer.flush();
         //        throw new ExerciseNotCompletedException(); // todo: implement according to javadoc and verify by ClientUtilTest
     }
 }

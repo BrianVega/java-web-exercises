@@ -24,7 +24,12 @@ public class ClientUtil {
      */
     @SneakyThrows
     public static Socket openSocket(String host, int port) {
-        throw new ExerciseNotCompletedException(); // todo: implement according to javadoc and verify by ClientUtilTest
+        Socket socket = new Socket(host, port);
+        if(!socket.isConnected()) {
+            throw new ExerciseNotCompletedException();
+        }
+        return socket;
+//        throw new ExerciseNotCompletedException(); // todo: implement according to javadoc and verify by ClientUtilTest
     }
 
     /**
@@ -62,6 +67,8 @@ public class ClientUtil {
      */
     @SneakyThrows
     public static void writeToSocket(String message, Socket socket) {
-        throw new ExerciseNotCompletedException(); // todo: implement according to javadoc and verify by ClientUtilTest
+        String readMessage = readMessage(openConsoleReader());
+        socket.getOutputStream().write(readMessage.getBytes());
+        //        throw new ExerciseNotCompletedException(); // todo: implement according to javadoc and verify by ClientUtilTest
     }
 }

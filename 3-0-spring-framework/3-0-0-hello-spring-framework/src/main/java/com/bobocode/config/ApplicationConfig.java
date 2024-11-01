@@ -19,7 +19,7 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationConfig {
     // todo: configure application context according to javadoc by following tests in ApplicationConfigTest
     // todo: verify final implementation by running ApplicationContextTest
-
+    // Done already
     @Bean
     public TestDataGenerator dataGenerator() {
         return new TestDataGenerator();

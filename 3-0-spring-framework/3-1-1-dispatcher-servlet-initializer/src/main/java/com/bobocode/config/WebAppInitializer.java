@@ -9,16 +9,19 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        throw new ExerciseNotCompletedException(); //todo: use {@link RootConfig} as root application config class
+        return new Class<?>[]{RootConfig.class};
+        //throw new ExerciseNotCompletedException(); //todo: use {@link RootConfig} as root application config class
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        throw new ExerciseNotCompletedException(); //todo: use {@link WebConfig} as ServletConfig class
+        return new Class<?>[]{WebConfig.class};
+        //throw new ExerciseNotCompletedException(); //todo: use {@link WebConfig} as ServletConfig class
     }
 
     @Override
     protected String[] getServletMappings() {
-        throw new ExerciseNotCompletedException(); //todo: provide default servlet mapping ("/")
+        return new String[]{"/"};
+        //throw new ExerciseNotCompletedException(); //todo: provide default servlet mapping ("/")
     }
 }

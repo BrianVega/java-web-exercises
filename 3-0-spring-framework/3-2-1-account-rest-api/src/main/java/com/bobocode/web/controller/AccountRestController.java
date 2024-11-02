@@ -1,6 +1,15 @@
 package com.bobocode.web.controller;
 
 import com.bobocode.dao.AccountDao;
+import com.bobocode.model.Account;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.security.auth.login.AccountNotFoundException;
+import java.net.URI;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -16,6 +25,55 @@ import com.bobocode.dao.AccountDao;
  * todo: 7. Implement method that handles DELETE request with id as path variable removes an account by id
  * todo:    Configure HTTP response status code 204 - NO CONTENT
  */
+
+@RestController
+@RequestMapping(value = "/accounts")
 public class AccountRestController {
+
+    private final AccountDao accountDao;
+    public AccountRestController(AccountDao accountDao) {
+        this.accountDao = accountDao;
+    }
+
+    @GetMapping
+    public List<Account> getAccounts() {
+        return accountDao.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Account getAccountById(@PathVariable Long id) {
+        return accountDao.findById(id);
+    }
+
+    @PostMapping
+    public ResponseEntity<Account> createAccount(@RequestBody Account account) {
+        Account createdAccount = accountDao.save(account);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("{/id}")
+                .buildAndExpand(createdAccount)
+                .toUri();
+
+        return ResponseEntity.created(location).body(createdAccount);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Account> deleteAccountById(@PathVariable Long id) {
+        Account account = accountDao.findById(id);
+
+        accountDao.remove(account);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Account> updateAccountById(@PathVariable Long id, @RequestBody Account account) {
+        if(accountDao.findById(id) != null) {
+            accountDao.save(account);
+        }
+
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
